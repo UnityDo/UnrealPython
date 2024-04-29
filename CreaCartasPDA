@@ -1,0 +1,54 @@
+import unreal
+
+# Enumerado para los tipos de palo
+class ETipoPalo:
+    ESPADAS = 'Espadas'
+    BASTOS = 'Bastos'
+    OROS = 'Oros'
+    COPAS = 'Copas'
+
+# Diccionario para asociar el tipo de palo con su ruta en el Content Browser
+palo_paths = {
+    ETipoPalo.ESPADAS: '/Game/Cartas_PDA/Espadas/',
+    ETipoPalo.BASTOS: '/Game/Cartas_PDA/Bastos/',
+    ETipoPalo.OROS: '/Game/Cartas_PDA/Oros/',
+    ETipoPalo.COPAS: '/Game/Cartas_PDA/Copas/'
+}
+
+# Función para crear una carta
+def crear_carta(tipo_palo, valor, es_figura, nombre_asset):
+    # Cargar la clase de Primary Data Asset
+    carta_class = unreal.load_class(None, '/Script/JuegoCartas.PDA_Carta')
+
+    
+    # Crear la instancia del asset
+    carta_asset = unreal.AssetToolsHelpers.get_asset_tools().create_asset(
+        asset_name=nombre_asset,
+        package_path=palo_paths[tipo_palo],
+        asset_class=carta_class,
+        factory=None
+    )
+    
+    # Establecer las propiedades
+    tipo_palo_enum = unreal.find_object(None, '/Script/JuegoCartas.ETipoPalo')
+    #espadas_enum_value = tipo_palo_enum.get_editor_property('Espadas')
+    #carta_asset.set_editor_property('TipoPalo', espadas_enum_value)
+    carta_asset.set_editor_property('Valor',valor)
+    carta_asset.set_editor_property('esFigura',es_figura)
+    carta_ima=unreal.load_asset('/Game/Cartas/bastos_01.uasset')
+
+    carta_asset.set_editor_property('ImagenCarta',carta_ima)
+    
+    # Guardar el asset
+    unreal.EditorAssetLibrary.save_loaded_asset(carta_asset)
+
+# Función para crear todas las cartas
+def crear_todas_las_cartas():
+    for palo in ['Espadas','Bastos', 'Oros', 'Copas']:
+        for valor in range(1, 11):  # Asumiendo que hay cartas del 1 al 10
+            es_figura = valor > 7  # Asumiendo que las figuras son 8, 9 y 10
+            nombre_asset = f'Carta_{palo}_{valor}'
+            crear_carta(palo, valor, es_figura, nombre_asset)
+
+# Llamar a la función para crear las cartas
+crear_todas_las_cartas()
