@@ -1,0 +1,130 @@
+import unreal
+
+nombres_competencia = [
+    "Alquimia",
+    "Artesania",
+    "ConocimientoArea",
+    "Correr",
+    "Astrologia",
+    "Elocuencia",
+    "Ensenar",
+    "Esconderse",
+    "Escuchar",
+    "Esquivar",
+    "Empatia",
+    "Descubrir",
+    "Falsificar",
+    "ForzMecanica",
+    "Idioma",
+    "Juego",
+    "JuegosManos",
+    "Lanzar",
+    "LeerEscribir",
+    "Leyendas",
+    "Mando",
+    "Medicina",
+    "Memoria",
+    "Musica",
+    "Nadar",
+    "Navegar",
+    "Ocultar",
+    "PrimerosAuxilios",
+    "Rastrear",
+    "Robar",
+    "Saltar",
+    "Sanar",
+    "Sigilo",
+    "Seduccion",
+    "Soborno",
+    "Teologia",
+    "Trepar",
+    "Tortura",
+    "Arco",
+    "Ballesta",
+    "Cuchillo",
+    "Espada",
+    "Espadon",
+    "Escudo",
+    "Hacha",
+    "Honda",
+    "Lanza",
+    "Maza",
+    "Palo"
+]
+atributos_competencia = [
+    "Habilidad",
+    "Habilidad",
+    "Cultura",
+    "Agilidad",
+    "Cultura",
+    "Cultura",
+    "Cultura",
+    "Agilidad",
+    "Percepcion",
+    "Agilidad",
+    "Percepcion",
+    "Percepcion",
+    "Habilidad",
+    "Habilidad",
+    "Cultura",
+    "Habilidad",
+    "Habilidad",
+    "Agilidad",
+    "Cultura",
+    "Cultura",
+    "Comunicacion",
+    "Cultura",
+    "Cultura",
+    "Cultura",
+    "Habilidad",
+    "Cultura",
+    "Habilidad",
+    "Habilidad",
+    "Percepcion",
+    "Habilidad",
+    "Agilidad",
+    "Habilidad",
+    "Agilidad",
+    "Aspecto",
+    "Comunicacion",
+    "Cultura",
+    "Agilidad",
+    "Habilidad",
+    "Percepcion",
+    "Percepcion",
+    "Habilidad",
+    "Habilidad",
+    "Fuerza",
+    "Habilidad",
+    "Fuerza",
+    "Percepcion",
+    "Agilidad",
+    "Fuerza",
+    "Agilidad"
+]
+# Asegúrate de que las listas nombres_competencia y atributos_competencia existen y tienen la misma longitud
+assert len(nombres_competencia) == len(atributos_competencia)
+
+# Crea los nuevos assets
+
+
+
+
+# Ruta al asset existente
+asset_path = "/Game/Competencias/CompetenciaBase"
+
+# Carga el asset existente
+existing_asset = unreal.EditorAssetLibrary.load_asset(asset_path)
+
+
+# Verifica que el asset exista
+if existing_asset is None:
+    unreal.log_error("No se pudo cargar el asset en " + asset_path)
+else:
+    # Crea una copia del asset
+    new_asset_path = "/Game/Competencias/prueba_copia"
+    new_asset = unreal.EditorAssetLibrary.duplicate_asset(asset_path, new_asset_path)
+    texto=unreal.TextLibrary.text_from_string_table("/Game/Textos/ST_Textos.ST_Textos","Ensenar")
+    new_asset.set_editor_property("Nombre", texto)
+    Atributo= new_asset.get_editor_property("AtributoRef")
+    new_asset.set_editor_property("AtributoRef",Atributo.CULTURA)
