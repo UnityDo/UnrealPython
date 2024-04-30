@@ -52,7 +52,7 @@ nombres_competencia = [
     "Palo"
 ]
 atributos_competencia = [
-    "Habilidad",
+    "Cultura",
     "Habilidad",
     "Cultura",
     "Agilidad",
@@ -117,14 +117,30 @@ asset_path = "/Game/Competencias/CompetenciaBase"
 existing_asset = unreal.EditorAssetLibrary.load_asset(asset_path)
 
 
-# Verifica que el asset exista
-if existing_asset is None:
-    unreal.log_error("No se pudo cargar el asset en " + asset_path)
-else:
+# Itera sobre las listas nombres_competencia y atributos_competencia
+for i in range(len(nombres_competencia)):
     # Crea una copia del asset
-    new_asset_path = "/Game/Competencias/prueba_copia"
+    new_asset_path = "/Game/Competencias/" + nombres_competencia[i]
     new_asset = unreal.EditorAssetLibrary.duplicate_asset(asset_path, new_asset_path)
-    texto=unreal.TextLibrary.text_from_string_table("/Game/Textos/ST_Textos.ST_Textos","Ensenar")
+    
+    # Obtiene el texto localizado
+    texto = unreal.TextLibrary.text_from_string_table("/Game/Textos/ST_Textos.ST_Textos", nombres_competencia[i])
+    
+    # Establece las propiedades Nombre y AtributoRef
     new_asset.set_editor_property("Nombre", texto)
     Atributo= new_asset.get_editor_property("AtributoRef")
-    new_asset.set_editor_property("AtributoRef",Atributo.CULTURA)
+    if atributos_competencia[i] == "Cultura":
+        new_asset.set_editor_property("AtributoRef", Atributo.CULTURA)
+    elif atributos_competencia[i] == "Habilidad":
+        new_asset.set_editor_property("AtributoRef", Atributo.HABILIDAD)
+    elif atributos_competencia[i] == "Agilidad":
+        new_asset.set_editor_property("AtributoRef", Atributo.AGILIDAD)
+    elif atributos_competencia[i] == "Percepcion":
+        new_asset.set_editor_property("AtributoRef", Atributo.PERCEPCION)
+    elif atributos_competencia[i] == "Comunicacion":
+        new_asset.set_editor_property("AtributoRef", Atributo.COMUNICACION)
+    elif atributos_competencia[i] == "Aspecto":
+        new_asset.set_editor_property("AtributoRef", Atributo.ASPECTO)
+    elif atributos_competencia[i] == "Fuerza":
+        new_asset.set_editor_property("AtributoRef", Atributo.FUERZA)
+
